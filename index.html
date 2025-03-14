@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Termo - SESI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('sua-imagem-aqui.jpg'); /* Substitua pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        .correct { background-color: green; color: white; }
+        .present { background-color: orange; color: white; }
+        .absent { background-color: gray; color: white; }
+        .input-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        #guess {
+            font-size: 18px;
+            padding: 10px;
+            width: 120px;
+            text-transform: uppercase;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo do Termo</h1>
+    <div class="input-container">
+        <input type="text" id="guess" maxlength="5" />
+        <button onclick="checkGuess()">Enviar</button>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p id="message"></p>
+
+    <script>
+        const palavraDoDia = "float"; // Defina aqui a palavra do dia
+        const grid = document.getElementById("grid");
+        const guessInput = document.getElementById("guess");
+        const message = document.getElementById("message");
+
+        function createGrid() {
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 5; j++) {
+                    let div = document.createElement("div");
+                    div.classList.add("cell");
+                    grid.appendChild(div);
+                }
+            }
+        }
+
+        let attempt = 0;
+        function checkGuess() {
+            let guess = guessInput.value.toLowerCase();
+            if (guess.length !== 5) {
+                message.textContent = "A palavra deve ter 5 letras.";
+                return;
+            }
+            let cells = document.querySelectorAll(".cell");
+            for (let i = 0; i < 5; i++) {
+                let cell = cells[attempt * 5 + i];
+                cell.textContent = guess[i];
+                if (guess[i] === palavraDoDia[i]) {
+                    cell.classList.add("correct");
+                } else if (palavraDoDia.includes(guess[i])) {
+                    cell.classList.add("present");
+                } else {
+                    cell.classList.add("absent");
+                }
+            }
+            attempt++;
+            guessInput.value = "";
+            if (guess === palavraDoDia) {
+                message.textContent = "Parabéns! Você acertou!";
+                guessInput.disabled = true;
+            } else if (attempt >= 6) {
+                message.textContent = "Fim do jogo! A palavra era " + palavraDoDia;
+                guessInput.disabled = true;
+            }
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>
