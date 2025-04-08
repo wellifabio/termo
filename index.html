@@ -70,13 +70,13 @@
     <div class="grid" id="grid"></div>
     <p id="message"></p>
     <script>
-        const palavraDoDia = "debug"; 
+        const palavraDoDia = "prisma"; 
         const grid = document.getElementById("grid");
         const message = document.getElementById("message");
 
         function createGrid() {
             for (let i = 0; i < 6; i++) {
-                for (let j = 0; j < 5; j++) {
+                for (let j = 0; j < 6; j++) {
                     let div = document.createElement("div");
                     div.classList.add("cell");
                     div.setAttribute("contenteditable", "true");
