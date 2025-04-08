@@ -14,7 +14,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(5, 50px);
+            grid-template-columns: repeat(6, 50px);
             gap: 5px;
             justify-content: center;
             margin-top: 20px;
@@ -104,7 +104,7 @@
         function getNextCell(currentCell) {
             let row = parseInt(currentCell.dataset.row);
             let col = parseInt(currentCell.dataset.col);
-            if (col < 4) {
+            if (col < 5) {
                 return document.querySelector(`[data-row='${row}'][data-col='${col + 1}']`);
             }
             return null;
@@ -114,7 +114,7 @@
         function checkGuess() {
             let cells = document.querySelectorAll(".cell");
             let guess = "";
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 6; i++) {
                 let cell = cells[attempt * 5 + i];
                 if (!cell.textContent) {
                     message.textContent = "Preencha todas as letras antes de confirmar.";
@@ -122,8 +122,8 @@
                 }
                 guess += cell.textContent.toLowerCase();
             }
-            for (let i = 0; i < 5; i++) {
-                let cell = cells[attempt * 5 + i];
+            for (let i = 0; i < 6; i++) {
+                let cell = cells[attempt * 6 + i];
                 setTimeout(() => {
                     cell.classList.add("flip");
                     setTimeout(() => {
